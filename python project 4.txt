@@ -1,0 +1,69 @@
+import time
+
+def introduction():
+    print("Welcome to the Text-based Adventure Game!")
+    print("You find yourself in a mysterious forest. Your goal is to reach the magical castle.")
+    print("Let the adventure begin!\n")
+
+def make_choice(choices):
+    print("Choose your path:")
+    for i, choice in enumerate(choices, 1):
+        print(f"{i}. {choice}")
+
+    while True:
+        try:
+            choice = int(input("Enter the number of your choice: "))
+            if 1 <= choice <= len(choices):
+                return choice
+            else:
+                print("Invalid choice. Please enter a valid number.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+def forest_scene():
+    print("You enter a dense forest.")
+    time.sleep(1)
+    print("You encounter a fork in the road.")
+
+    choices = ["Take the left path", "Take the right path"]
+    user_choice = make_choice(choices)
+
+    if user_choice == 1:
+        print("You venture deeper into the forest.")
+        return "forest_left"
+    else:
+        print("You follow the right path.")
+        return "forest_right"
+
+def encounter_wolf():
+    print("As you continue your journey, you encounter a friendly wolf.")
+    time.sleep(1)
+    print("The wolf offers to guide you to the castle.")
+
+    choices = ["Accept the wolf's guidance", "Decline and continue alone"]
+    user_choice = make_choice(choices)
+
+    if user_choice == 1:
+        print("You and the wolf travel together.")
+        return "castle"
+    else:
+        print("You thank the wolf but decide to continue on your own.")
+        return "castle"
+
+def main():
+    introduction()
+
+    current_scene = forest_scene()
+
+    while current_scene != "castle":
+        if current_scene == "forest_left":
+            current_scene = encounter_wolf()
+        elif current_scene == "forest_right":
+            print("You face a challenging obstacle in the forest.")
+            # Add more scenes and choices here based on your storyline
+            break
+
+    print("\nCongratulations! You have reached the magical castle. You win!")
+
+if __name__ == "__main__":
+    main()
